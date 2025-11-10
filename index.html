@@ -1,302 +1,9 @@
-index.html
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asesmen Loop</title>
-
-    <style>
-        /* Pengaturan Variabel Warna dan Dasar */
-        :root {
-            --primary: #043915;
-            --secondary: #4c763b;
-            --accent1: #b0ce88;
-            --accent2: #fefc8e;
-            --white: #FFFFFF;
-            --black: #000000;
-            --light-gray: #f0f2f5;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--light-gray);
-            color: var(--black);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        header {
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 15px 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header-content {
-            display: flex;
-            align-items: center;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .header-logo {
-            height: 50px;
-            width: auto;
-            margin-right: 20px;
-        }
-
-        .header-text h1 {
-            color: var(--white);
-            font-size: 1.5em;
-            margin: 0;
-        }
-
-        #progressInfo {
-            font-size: 0.9em;
-            font-style: italic;
-            opacity: 0.9;
-        }
-
-        /* Konten Utama */
-        main {
-            flex: 1;
-            width: 100%;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Gaya "Card" untuk semua layar */
-        .card {
-            background-color: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            width: 90%;
-            max-width: 600px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        /* Menyembunyikan card yang tidak aktif */
-        #identity-screen, #quiz-container, #result-area {
-            display: none;
-        }
-
-        h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        /* Gaya untuk Input dan Tombol */
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 2px solid var(--accent1);
-            border-radius: 8px;
-            font-size: 1em;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-        
-        input[type="text"]:focus, textarea:focus {
-            outline: none;
-            border-color: var(--secondary);
-        }
-
-        button {
-            color: var(--white);
-            background-color: var(--secondary);
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1em;
-            width: 100%;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: var(--primary);
-        }
-        
-        #group-selection-screen .group-button {
-            margin-bottom: 10px;
-        }
-
-        /* Gaya untuk form identitas */
-        .identity-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            text-align: left;
-        }
-        .identity-grid label {
-            font-weight: bold;
-            color: var(--secondary);
-            margin-bottom: 5px;
-            display: block;
-        }
-        .full-width {
-            grid-column: 1 / -1;
-        }
-
-
-        /* Kontainer Kuis dan Hasil */
-        #quiz-container, #result-area {
-            text-align: left;
-        }
-        
-        #question-text {
-            background-color: var(--light-gray);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--secondary);
-        }
-
-        .result-block {
-            margin-bottom: 15px;
-        }
-        .result-block h3 {
-            color: var(--secondary);
-            margin-bottom: 8px;
-        }
-        .result-block p, .result-block .answer-display {
-            margin-bottom: 5px;
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 5px;
-            white-space: pre-wrap; /* Agar format teks jawaban tetap rapi */
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 15px;
-            font-size: 0.9em;
-            width: 100%;
-        }
-
-        /* Gaya Cetak/PDF */
-        @media print {
-            body { background-color: var(--white); }
-            header, footer, button { 
-                display: none !important; 
-            }
-            main { padding: 0; }
-            .card {
-                box-shadow: none;
-                border: none;
-                width: 100%;
-                max-width: 100%;
-            }
-            #group-selection-screen, #identity-screen, #quiz-container {
-                display: none !important;
-            }
-            #result-area {
-                display: block !important;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="header-content">
-            <img id="logo" src="SEOLIS.png" alt="Logo SEOLIS" class="header-logo">
-            <div class="header-text">
-                <h1>Asesmen Biotik & Abiotik</h1>
-                <div id="progressInfo">Pilih kelompok untuk memulai</div>
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <div id="group-selection-screen" class="card">
-            <h2>Selamat Datang!</h2>
-            <p>Silakan pilih kelompokmu untuk menampilkan soal yang sesuai.</p>
-            <button class="group-button" onclick="selectGroup(1)">Kelompok 1</button>
-            <button class="group-button" onclick="selectGroup(2)">Kelompok 2</button>
-        </div>
-
-        <div id="identity-screen" class="card">
-            <h2 id="identity-title">Identitas Kelompok</h2>
-            <div class="identity-grid">
-                <div>
-                    <label for="student-name-1">Nama Siswa 1</label>
-                    <input type="text" id="student-name-1" placeholder="Nama Siswa 1" required>
-                </div>
-                <div>
-                    <label for="student-absent-1">Nomor Absen 1</label>
-                    <input type="text" id="student-absent-1" placeholder="Absen Siswa 1" required>
-                </div>
-                <div>
-                    <label for="student-name-2">Nama Siswa 2</label>
-                    <input type="text" id="student-name-2" placeholder="Nama Siswa 2" required>
-                </div>
-                <div>
-                    <label for="student-absent-2">Nomor Absen 2</label>
-                    <input type="text" id="student-absent-2" placeholder="Absen Siswa 2" required>
-                </div>
-                <div class="full-width">
-                    <label for="class-name">Kelas</label>
-                    <input type="text" id="class-name" placeholder="Contoh: X-A" required>
-                </div>
-            </div>
-            <button onclick="startQuiz()">Lanjutkan ke Soal</button>
-        </div>
-
-        <div id="quiz-container" class="card">
-            <h2 id="quiz-title">Soal Uraian</h2>
-            <div id="question-text">
-                <p id="story"></p>
-                <strong id="question"></strong>
-            </div>
-            <textarea id="answer-input" placeholder="Tulis jawabanmu di sini..."></textarea>
-            <button onclick="submitQuiz()">Kumpulkan Jawaban</button>
-        </div>
-
-        <div id="result-area" class="card">
-            <h2>Hasil Pengerjaan Asesmen</h2>
-            <div id="result-details"></div>
-            <button id="print-btn" onclick="window.print()">Cetak Hasil (PDF)</button>
-        </div>
-    </main>
-    
-    <footer>
-        &copy; 2025 Seoludut Education Learning System
-    </footer>
-
-    <script>
+<script>
         // Variabel Global
         let selectedGroup = 0;
-        let identityData = {};
+        let identityData = {}; // Objek ini akan kita isi dengan data baru
 
-        // Data Soal
+        // Data Soal (Tetap sama)
         const questions = {
             1: {
                 title: "Kasus 1: Kurir Paket dan Dua Perumahan",
@@ -310,7 +17,7 @@ index.html
             }
         };
 
-        // Referensi elemen DOM
+        // Referensi elemen DOM (Tetap sama)
         const groupSelectionScreen = document.getElementById('group-selection-screen');
         const identityScreen = document.getElementById('identity-screen');
         const quizContainer = document.getElementById('quiz-container');
@@ -326,6 +33,11 @@ index.html
             groupSelectionScreen.style.display = 'none';
             identityScreen.style.display = 'block';
             document.getElementById('identity-title').textContent = `Identitas Kelompok ${groupNumber}`;
+            
+            // --- PERUBAHAN DI SINI ---
+            // Secara otomatis mengisi input "Kelompok ke-"
+            document.getElementById('group-number-field').value = groupNumber; 
+            
             progressInfo.textContent = 'Masukkan identitas kelompok';
         }
 
@@ -333,18 +45,19 @@ index.html
          * Fungsi untuk memulai kuis setelah mengisi identitas.
          */
         function startQuiz() {
-            // Mengambil data dari form
+            // --- PERUBAHAN DI SINI ---
+            // Mengambil data dari form baru
             identityData = {
-                nama1: document.getElementById('student-name-1').value.trim(),
-                absen1: document.getElementById('student-absent-1').value.trim(),
-                nama2: document.getElementById('student-name-2').value.trim(),
-                absen2: document.getElementById('student-absent-2').value.trim(),
-                kelas: document.getElementById('class-name').value.trim(),
+                kelompok: document.getElementById('group-number-field').value.trim(),
+                presensi1: document.getElementById('presence-1').value.trim(),
+                presensi2: document.getElementById('presence-2').value.trim(),
+                presensi3: document.getElementById('presence-3').value.trim(),
             };
 
-            // Validasi sederhana: memastikan semua field diisi
-            if (!identityData.nama1 || !identityData.absen1 || !identityData.nama2 || !identityData.absen2 || !identityData.kelas) {
-                alert('Mohon lengkapi semua data identitas!');
+            // Validasi sederhana: memastikan minimal 2 presensi diisi
+            // (Kita anggap presensi 3 opsional)
+            if (!identityData.presensi1 || !identityData.presensi2) {
+                alert('Mohon isi minimal Nomor Presensi Siswa 1 dan 2!');
                 return;
             }
 
@@ -379,12 +92,21 @@ index.html
             const soal = questions[selectedGroup];
             const resultDetails = document.getElementById('result-details');
             
+            // --- PERUBAHAN DI SINI ---
+            // Membuat tampilan hasil berdasarkan data presensi
+            // Kita juga cek apakah presensi 3 diisi atau tidak
+
+            let presensi3HTML = '';
+            if (identityData.presensi3) {
+                presensi3HTML = `<p><strong>Nomor Presensi 3:</strong> ${identityData.presensi3}</p>`;
+            }
+
             resultDetails.innerHTML = `
                 <div class="result-block">
-                    <h3>Identitas Kelompok ${selectedGroup}</h3>
-                    <p><strong>Kelas:</strong> ${identityData.kelas}</p>
-                    <p><strong>Siswa 1:</strong> ${identityData.nama1} (Absen: ${identityData.absen1})</p>
-                    <p><strong>Siswa 2:</strong> ${identityData.nama2} (Absen: ${identityData.absen2})</p>
+                    <h3>Identitas Kelompok ${identityData.kelompok}</h3>
+                    <p><strong>Nomor Presensi 1:</strong> ${identityData.presensi1}</p>
+                    <p><strong>Nomor Presensi 2:</strong> ${identityData.presensi2}</p>
+                    ${presensi3HTML}
                 </div>
                 <hr style="margin: 20px 0;">
                 <div class="result-block">
@@ -402,5 +124,3 @@ index.html
             `;
         }
     </script>
-</body>
-</html>
