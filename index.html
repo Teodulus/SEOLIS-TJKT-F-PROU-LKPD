@@ -1,4 +1,76 @@
-<script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asesmen Konsep Router</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 20px auto; padding: 15px; background-color: #f4f4f9; }
+        div { background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        button { padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        input[type="text"], textarea { width: 300px; padding: 8px; margin: 5px 0 15px 0; border: 1px solid #ccc; border-radius: 4px; }
+        textarea { width: 95%; }
+        h1, h2, h3 { color: #333; }
+        #progressInfo { text-align: center; font-style: italic; color: #555; background: none; box-shadow: none; }
+        .result-block { margin-bottom: 15px; }
+        .answer-display { background-color: #f9f9f9; border: 1px solid #eee; padding: 10px; border-radius: 5px; min-height: 50px; }
+    </style>
+</head>
+<body>
+
+    <h1>Asesmen Konsep Router</h1>
+    <p id="progressInfo">Pilih kelompok untuk memulai</p>
+    <hr>
+
+    <div id="group-selection-screen">
+        <h2>Pilih Kelompok Anda</h2>
+        <button onclick="selectGroup(1)">Kelompok 1 (Kasus Kurir)</button>
+        <button onclick="selectGroup(2)">Kelompok 2 (Kasus Google Maps)</button>
+    </div>
+
+    <div id="identity-screen" style="display: none;">
+        <h2 id="identity-title">Identitas Kelompok</h2>
+        <form onsubmit="startQuiz(); return false;">
+            <div>
+                <label for="group-number-field">Kelompok ke-:</label><br>
+                <input type="text" id="group-number-field" readonly>
+            </div>
+            <div>
+                <label for="presence-1">Nomor Presensi Siswa 1:</label><br>
+                <input type="text" id="presence-1" placeholder="Contoh: 08">
+            </div>
+            <div>
+                <label for="presence-2">Nomor Presensi Siswa 2:</label><br>
+                <input type="text" id="presence-2" placeholder="Contoh: 15">
+            </div>
+            <div>
+                <label for="presence-3">Nomor Presensi Siswa 3 (Opsional):</label><br>
+                <input type="text" id="presence-3" placeholder="Contoh: 22">
+            </div>
+            <button type="submit">Mulai Kuis</button>
+        </form>
+    </div>
+
+    <div id="quiz-container" style="display: none;">
+        <h2 id="quiz-title">Judul Soal</h2>
+        <h3>Studi Kasus:</h3>
+        <p id="story">Cerita kasus akan muncul di sini.</p>
+        <h3 id="question">Pertanyaan akan muncul di sini.</h3>
+        <form onsubmit="submitQuiz(); return false;">
+            <label for="answer-input">Jawaban Anda:</label><br>
+            <textarea id="answer-input" rows="8" placeholder="Tulis jawaban dan alasan Anda di sini..."></textarea><br>
+            <button type="submit">Kumpulkan Jawaban</button>
+        </form>
+    </div>
+
+    <div id="result-area" style="display: none;">
+        <h2>Hasil Jawaban</h2>
+        <div id="result-details"></div>
+    </div>
+
+
+    <script>
         // Variabel Global
         let selectedGroup = 0;
         let identityData = {}; // Objek ini akan kita isi dengan data baru
@@ -17,7 +89,7 @@
             }
         };
 
-        // Referensi elemen DOM (Tetap sMama)
+        // Referensi elemen DOM (Tetap sama)
         const groupSelectionScreen = document.getElementById('group-selection-screen');
         const identityScreen = document.getElementById('identity-screen');
         const quizContainer = document.getElementById('quiz-container');
@@ -124,3 +196,6 @@
             `;
         }
     </script>
+
+</body>
+</html>
